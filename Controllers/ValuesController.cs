@@ -10,18 +10,24 @@ namespace heroku_test.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
+        private MyContext db = null;
+        public ValuesController(MyContext _db)
+        {
+            this.db = _db;
+        }
+
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public object Get()
         {
-            return new string[] { "value1", "value2" };
+            return Environment.GetEnvironmentVariables();
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        public object Get(int id)
         {
-            return "value";
+            return this.db.Items.ToList();
         }
 
         // POST api/values
